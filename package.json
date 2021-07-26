@@ -1,6 +1,6 @@
 {
   "name": "react-codemirror6",
-  "version": "0.0.0-development",
+  "version": "0.0.0-semantic",
   "description": "A wrapper around CodeMirror 6 so it behaves like a controlled input",
   "main": "dist/index.js",
   "module": "dist/react-codemirror6.esm.js",
