@@ -48,6 +48,7 @@ const BiggerWrapper: Story<Parameters<typeof CodeMirrorLite>[0]> = (args) => {
           onChange={setValue}
         />
       </div>
+      input ↑ (invisible without extensions)
       <br />
       <br />
       value:

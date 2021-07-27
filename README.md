@@ -6,6 +6,10 @@
 
 > **A wrapper around CodeMirror 6 so it behaves like a controlled input**
 
+## Demo
+
+https://tbjgolden.github.io/react-codemirror6/
+
 ## Installation
 
 ```sh
@@ -13,23 +17,109 @@ npm install react-codemirror6 --save
 # yarn add react-codemirror6
 ```
 
-Alternatively, there are also client web builds available:
+This library also contains [web builds](#browser).
 
-<!-- IMPORTANT: Do not delete or change the comments in the code block below -->
+## Usage
 
-```html
-<!-- Dependencies -->
-<script src="https://unpkg.com/react/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+```tsx
+import ReactDOM from 'react-dom'
+import React, { useState, useEffect } from 'react'
 
-<!-- window.ReactCodeMirror -->
-<script src="https://unpkg.com/react-codemirror6/dist/react-codemirror6.umd.js"></script>
+import { CodeMirror } from 'react-codemirror6'
+// ...or, for a lite version without the (useful!) stuff in @codemirror/basic-setup:
+// import { CodeMirrorLite as CodeMirror } from 'react-codemirror6/lite'
+
+const App = () => {
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    console.log({ value })
+  }, [value])
+
+  return (
+    <div style={{ height: 400, display: 'flex' }}>
+      <CodeMirror
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: '1 0 auto'
+        }}
+        value={value}
+        onChange={setValue}
+        extensions={
+          [
+            // theme, language, ...
+          ]
+        }
+      />
+    </div>
+  )
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'))
 ```
 
-## Documentation
+## Browser Usage
 
-- [`Docs`](docs)
-- [`API`](docs/api)
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react-codemirror6/dist/react-codemirror6.umd.js"></script>
+    <script>
+      const App = () => {
+        const [value, setValue] = React.useState('')
+
+        React.useEffect(() => {
+          console.log({ value })
+        }, [value])
+
+        return React.createElement(
+          'div',
+          {
+            style: { height: 400, display: 'flex' }
+          },
+          React.createElement(ReactCodeMirror.CodeMirror, {
+            style: {
+              display: 'flex',
+              flexDirection: 'column',
+              flex: '1 0 auto'
+            },
+            value,
+            onChange: setValue,
+            extensions: [
+              // theme, language, ...
+            ]
+          })
+        )
+      }
+
+      ReactDOM.render(React.createElement(App), document.querySelector('#root'))
+    </script>
+  </body>
+</html>
+```
+
+## Extending functionality
+
+CodeMirror 6 is very powerful, but it exposes a granular API (but a powerful
+one!).
+
+For many, the configuration is likely to be a barrier to entry, which is why
+this library exists.
+
+You can extend functionality with extensions and keymaps, which in theory allows
+total flexibility, but this library does not allow you to imperatively access
+the view or state.
+
+## Tips
+
+A dynamic set of extensions is beyond the scope of this project. The component
+does not track changes to the extensions or keymap properties. If you'd like to
+change these dynamically, you will want to unmount and remount the component.
 
 ## License
 
