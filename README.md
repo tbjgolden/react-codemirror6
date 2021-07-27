@@ -19,6 +19,8 @@ Alternatively, there are also client web builds available:
 
 ```html
 <!-- Dependencies -->
+<script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
 
 <!-- window.ReactCodeMirror -->
 <script src="https://unpkg.com/react-codemirror6/dist/react-codemirror6.umd.js"></script>
