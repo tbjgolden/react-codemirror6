@@ -25,7 +25,7 @@ import { lintKeymap } from '@codemirror/lint'
 
 export const CodeMirror = ({
   value: valueProp,
-  onChange,
+  onChange: onChangeProp,
   extensions = [],
   keymap: extraKeymap = [],
   ...props
@@ -40,6 +40,8 @@ export const CodeMirror = ({
 }): JSX.Element => {
   const valueRef = useRef(valueProp)
   valueRef.current = valueProp
+  const onChangeRef = useRef(onChangeProp)
+  onChangeRef.current = onChangeProp
 
   const extensionsRef = useRef<Extension>(extensions)
   const extraKeymapRef = useRef<readonly KeyBinding[]>(extraKeymap)
@@ -88,7 +90,7 @@ export const CodeMirror = ({
             EditorState.transactionExtender.of(({ newDoc }) => {
               const newValue = newDoc.toString()
               if (newValue !== valueRef.current) {
-                onChange?.(newValue)
+                onChangeRef.current?.(newValue)
               }
               return null
             })
@@ -102,6 +104,7 @@ export const CodeMirror = ({
     }
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       cancelAnimationFrame(animationFrameRef.current)
       if (editorRef.current !== null) {
         editorRef.current.view.destroy()

@@ -4,7 +4,7 @@ import { Extension, EditorState } from '@codemirror/state'
 
 export const CodeMirrorLite = ({
   value: valueProp,
-  onChange,
+  onChange: onChangeProp,
   extensions = [],
   ...props
 }: Omit<
@@ -17,6 +17,8 @@ export const CodeMirrorLite = ({
 }): JSX.Element => {
   const valueRef = useRef(valueProp)
   valueRef.current = valueProp
+  const onChangeRef = useRef(onChangeProp)
+  onChangeRef.current = onChangeProp
 
   const extensionsRef = useRef<Extension>(extensions)
   const animationFrameRef = useRef<number>(-1)
@@ -38,7 +40,7 @@ export const CodeMirrorLite = ({
             EditorState.transactionExtender.of(({ newDoc }) => {
               const newValue = newDoc.toString()
               if (newValue !== valueRef.current) {
-                onChange?.(newValue)
+                onChangeRef.current?.(newValue)
               }
               return null
             })
@@ -52,6 +54,7 @@ export const CodeMirrorLite = ({
     }
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       cancelAnimationFrame(animationFrameRef.current)
       if (editorRef.current !== null) {
         editorRef.current.view.destroy()

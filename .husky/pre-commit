@@ -3,3 +3,4 @@
 
 yarn pretty-quick --staged
 yarn build-storybook -o "$(dirname "$0")/../docs"
+git add "$(dirname "$0")/../"
