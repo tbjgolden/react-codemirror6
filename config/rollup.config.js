@@ -64,7 +64,7 @@ const getPlugins = (bundleType) => [
     babelHelpers: 'runtime'
   }),
   json(),
-  bundleType === 'UMD' &&
+  bundleType === 'UMD_PROD' &&
     terser({
       output: { comments: false },
       compress: {
