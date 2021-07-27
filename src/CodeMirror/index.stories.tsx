@@ -15,6 +15,20 @@ const PrimaryWrapper: Story<Parameters<typeof CodeMirror>[0]> = (args) => {
       <CodeMirror {...args} value={value} onChange={setValue} />
       <br />
       <br />
+      <button
+        onClick={() => {
+          setValue(
+            new Array(5)
+              .fill(0)
+              .map(() => Math.random().toString().slice(2))
+              .join('\n')
+          )
+        }}
+      >
+        change to random value
+      </button>
+      <br />
+      <br />
       value:
       <pre>
         <code>{value}</code>
@@ -35,7 +49,7 @@ const BiggerWrapper: Story<Parameters<typeof CodeMirror>[0]> = (args) => {
 
   return (
     <>
-      <div style={{ height: 400, display: 'flex' }}>
+      <div style={{ height: 200, display: 'flex' }}>
         <CodeMirror
           {...args}
           style={{
@@ -47,6 +61,20 @@ const BiggerWrapper: Story<Parameters<typeof CodeMirror>[0]> = (args) => {
           onChange={setValue}
         />
       </div>
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          setValue(
+            new Array(5)
+              .fill(0)
+              .map(() => Math.random().toString().slice(2))
+              .join('\n')
+          )
+        }}
+      >
+        change to random value
+      </button>
       <br />
       <br />
       value:

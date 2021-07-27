@@ -113,5 +113,21 @@ export const CodeMirror = ({
     }
   }, [editorParentElRef])
 
+  useEffect(() => {
+    const editor = editorRef.current
+    if (editor !== null) {
+      const prevValue = editor.view.state.doc.toString()
+      editor.view.dispatch(
+        editor.view.state.update({
+          changes: {
+            from: 0,
+            to: prevValue.length,
+            insert: valueProp
+          }
+        })
+      )
+    }
+  }, [valueProp])
+
   return <div {...props} ref={editorParentElRef} />
 }
