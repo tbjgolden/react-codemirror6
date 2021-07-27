@@ -1,1 +1,1 @@
-export * from './CodeMirror'
+export * from './CodeMirrorLite'

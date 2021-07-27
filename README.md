@@ -1,7 +1,6 @@
 # `react-codemirror6`
 
 [![npm version](https://img.shields.io/npm/v/react-codemirror6.svg?style=flat-square)](https://www.npmjs.com/package/react-codemirror6)
-[![test coverage](https://img.shields.io/badge/dynamic/json?style=flat-square&color=brightgreen&label=coverage&query=%24.total.branches.pct&suffix=%25&url=https%3A%2F%2Funpkg.com%2Freact-codemirror6%2Fcoverage%2Fcoverage-summary.json)](https://www.npmjs.com/package/react-codemirror6)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tbjgolden/react-codemirror6/Release?style=flat-square)](https://github.com/tbjgolden/react-codemirror6/actions?query=workflow%3ARelease)
 
 > **A wrapper around CodeMirror 6 so it behaves like a controlled input**
@@ -26,8 +25,6 @@ import ReactDOM from 'react-dom'
 import React, { useState, useEffect } from 'react'
 
 import { CodeMirror } from 'react-codemirror6'
-// ...or, for a lite version without the (useful!) stuff in @codemirror/basic-setup:
-// import { CodeMirrorLite as CodeMirror } from 'react-codemirror6/lite'
 
 const App = () => {
   const [value, setValue] = useState('')
@@ -59,6 +56,20 @@ const App = () => {
 ReactDOM.render(<App />, document.querySelector('#root'))
 ```
 
+## Lite Version
+
+There is a 'lite' version without the (useful!) stuff added from
+@codemirror/basic-setup.
+
+```tsx
+// esm (webpack)
+import { CodeMirrorLite as CodeMirror } from 'react-codemirror6/dist/lite.esm'
+// cjs (old-style node)
+import { CodeMirrorLite as CodeMirror } from 'react-codemirror6/dist/lite'
+// web
+// <script src="https://unpkg.com/react-codemirror6/dist/lite.umd.js"></script>
+```
+
 ## Browser Usage
 
 ```html
@@ -68,7 +79,7 @@ ReactDOM.render(<App />, document.querySelector('#root'))
     <div id="root"></div>
     <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/react-codemirror6/dist/react-codemirror6.umd.js"></script>
+    <script src="https://unpkg.com/react-codemirror6/dist/index.umd.js"></script>
     <script>
       const App = () => {
         const [value, setValue] = React.useState('')

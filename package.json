@@ -3,8 +3,8 @@
   "version": "0.0.0-semantic",
   "description": "A wrapper around CodeMirror 6 so it behaves like a controlled input",
   "main": "dist/index.js",
-  "module": "dist/react-codemirror6.esm.js",
-  "umd": "dist/react-codemirror6.umd.js",
+  "module": "dist/index.esm.js",
+  "umd": "dist/index.umd.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -139,5 +139,10 @@
   "eslintConfig": {
     "root": true,
     "extends": "./config/eslint.config.js"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }

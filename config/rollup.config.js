@@ -20,7 +20,7 @@ const browserGlobals = {
   'jquery': '$'
 }
 
-const getExternal = (bundleType) => {
+const getExternal = (bundleType, isLite = false) => {
   const peerDependencies = Object.keys(pkg.peerDependencies || {})
   const dependencies = Object.keys(pkg.dependencies)
 
@@ -37,7 +37,12 @@ const getExternal = (bundleType) => {
     case 'CJS_DEV':
     case 'CJS_PROD':
     case 'ES':
-      return makeExternalPredicate([...peerDependencies, ...dependencies])
+      return makeExternalPredicate([
+        ...peerDependencies,
+        ...(isLite
+          ? ['@babel/runtime', '@codemirror/state', '@codemirror/view']
+          : dependencies)
+      ])
     default:
       return makeExternalPredicate(peerDependencies)
   }
@@ -106,6 +111,69 @@ export default [
     output: {
       banner: license,
       file: pkg.umd,
+      format: 'umd',
+      globals: Object.keys(pkg.peerDependencies || {}).reduce(
+        (dependencyNameMap, npmDependency) => ({
+          ...dependencyNameMap,
+          [npmDependency]:
+            browserGlobals[npmDependency] ||
+            ((npmDependency) => {
+              const pascal = npmDependency
+                .split('-')
+                .map((str) =>
+                  str.length > 0 ? str[0].toUpperCase() + str.slice(1) : ''
+                )
+                .join('')
+              console.warn(
+                dedent(`
+                  Blindly guessing that the browser global (i.e. window.<NAME>) for npm package...
+                    "${npmDependency}"
+                  ...is...
+                    "${pascal}"
+
+                  To fix this message
+                    '${npmDependency}': '<NAME>',
+                  to 'browserGlobals' in rollup.config.js
+                `)
+              )
+              return pascal
+            })()
+        }),
+        {}
+      ),
+      name: 'ReactCodeMirror',
+      sourcemap: true
+    },
+    plugins: getPlugins('UMD_PROD')
+  },
+  {
+    input: './compiled/lite.js',
+    external: getExternal('CJS_DEV'),
+    output: {
+      banner: license,
+      file: pkg.main.replace('index', 'lite'),
+      format: 'cjs',
+      sourcemap: true
+    },
+    plugins: getPlugins('CJS_DEV')
+  },
+  {
+    input: './compiled/lite.js',
+    external: getExternal('ES'),
+    output: {
+      banner: license,
+      file: pkg.module.replace('index', 'lite'),
+      format: 'es',
+      sourcemap: true
+    },
+    plugins: getPlugins('ES')
+  },
+  {
+    input: './compiled/lite.js',
+    external: getExternal('UMD_PROD'),
+    output: {
+      banner: license,
+      file: pkg.umd.replace('index', 'lite'),
       format: 'umd',
       globals: Object.keys(pkg.peerDependencies || {}).reduce(
         (dependencyNameMap, npmDependency) => ({
