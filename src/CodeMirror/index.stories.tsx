@@ -91,3 +91,41 @@ const BiggerWrapper: Story<Parameters<typeof CodeMirror>[0]> = (args) => {
 }
 
 export const Bigger = BiggerWrapper.bind({})
+
+const ControlledWrapper: Story<Parameters<typeof CodeMirror>[0]> = (args) => {
+  const [value, setValue] = useState('')
+
+  return (
+    <>
+      <div style={{ height: 400, display: 'flex' }}>
+        <CodeMirror
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: '1 0 auto'
+          }}
+          value={'this text should not change itself when typing'}
+          onChange={(value: string) => console.log(value)}
+          extensions={
+            [
+              // theme, language, ...
+            ]
+          }
+        />
+      </div>
+      <br />
+      <br />
+      value:
+      <pre>
+        <code>{value}</code>
+      </pre>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: 'pre{margin-top:0;background:#eee;padding:16px}'
+        }}
+      />
+    </>
+  )
+}
+
+export const Controlled = ControlledWrapper.bind({})
