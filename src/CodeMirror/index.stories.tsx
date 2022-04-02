@@ -133,7 +133,7 @@ const ControlledWrapper: Story<Parameters<typeof CodeMirror>[0]> = (args) => {
 
 export const Controlled = ControlledWrapper.bind({})
 
-const AddExtensionSampleWrapper: Story<Parameters<typeof CodeMirror>[0]> = (
+const PlusExtensionWrapper: Story<Parameters<typeof CodeMirror>[0]> = (
   args
 ) => {
   const [value, setValue] = useState(
@@ -169,4 +169,4 @@ const AddExtensionSampleWrapper: Story<Parameters<typeof CodeMirror>[0]> = (
   )
 }
 
-export const AddExtensionSample = AddExtensionSampleWrapper.bind({})
+export const PlusExtension = PlusExtensionWrapper.bind({})

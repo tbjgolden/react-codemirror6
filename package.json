@@ -27,6 +27,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "start": "start-storybook",
     "test": "concurrently \"yarn:lint\" \"yarn:build\"",
+    "docs": "build-storybook -o docs",
     "prepare": "husky install"
   },
   "keywords": [
