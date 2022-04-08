@@ -2,10 +2,15 @@ import React, { useEffect, useRef } from 'react'
 import { EditorView } from '@codemirror/view'
 import { Extension, EditorState, Transaction } from '@codemirror/state'
 
+const noop = () => {
+  // noop
+}
+
 export const CodeMirrorLite = ({
   value: valueProp,
   onChange: onChangeProp,
   extensions = [],
+  onViewChange: onViewChangeProp = noop,
   ...props
 }: Omit<
   React.HTMLAttributes<HTMLDivElement>,
@@ -13,6 +18,7 @@ export const CodeMirrorLite = ({
 > & {
   value: string
   onChange?: (value: string) => void
+  onViewChange?: (view: EditorView | null) => void
   extensions?: Extension
 }): JSX.Element => {
   // This ref is needed to allow changes to prevent binding the
@@ -25,6 +31,11 @@ export const CodeMirrorLite = ({
   // without reinitializing the EditorView
   const onChangeRef = useRef(onChangeProp)
   onChangeRef.current = onChangeProp
+
+  // This ref is needed to allow changes to the onViewChange prop
+  // without reinitializing the EditorView
+  const onViewChangeRef = useRef(onViewChangeProp)
+  onViewChangeRef.current = onViewChangeProp
 
   // This ref is to ensure the extensions object is not changed
   // - changing the extensions requires the user to fully unmount
@@ -92,6 +103,7 @@ export const CodeMirrorLite = ({
         state,
         parent: editorParentElRef.current
       })
+      onViewChangeRef.current?.(view)
       editorRef.current = {
         view
       }
@@ -101,6 +113,7 @@ export const CodeMirrorLite = ({
       if (editorRef.current !== null) {
         editorRef.current.view.destroy()
         editorRef.current = null
+        onViewChangeRef.current?.(null)
       }
     }
   }, [editorParentElRef])

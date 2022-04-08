@@ -5,7 +5,8 @@ import {
   highlightSpecialChars,
   drawSelection,
   highlightActiveLine,
-  KeyBinding
+  KeyBinding,
+  EditorView
 } from '@codemirror/view'
 import { Extension, EditorState } from '@codemirror/state'
 import { history, historyKeymap } from '@codemirror/history'
@@ -26,6 +27,7 @@ import { CodeMirrorLite } from '../CodeMirrorLite'
 export const CodeMirror = ({
   value,
   onChange,
+  onViewChange,
   extensions = [],
   keymap: extraKeymap = [],
   ...props
@@ -35,6 +37,7 @@ export const CodeMirror = ({
 > & {
   value: string
   onChange?: (value: string) => void
+  onViewChange?: (view: EditorView | null) => void
   extensions?: Extension
   keymap?: readonly KeyBinding[]
 }): JSX.Element => {
@@ -42,6 +45,7 @@ export const CodeMirror = ({
     <CodeMirrorLite
       value={value}
       onChange={onChange}
+      onViewChange={onViewChange}
       extensions={[
         lineNumbers(),
         highlightActiveLineGutter(),
