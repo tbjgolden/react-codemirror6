@@ -4,6 +4,8 @@
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tbjgolden/react-codemirror6/Release?style=flat-square)](https://github.com/tbjgolden/react-codemirror6/actions?query=workflow%3ARelease)
 
 > **A wrapper around CodeMirror 6 so it behaves like a controlled input**
+>
+> NOTE: Use [@uiw/react-codemirror](https://github.com/uiwjs/react-codemirror) instead. It's under active development and is a more robust solution.
 
 ## Demo
 
