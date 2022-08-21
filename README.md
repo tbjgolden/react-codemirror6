@@ -6,6 +6,8 @@
 > **A wrapper around CodeMirror 6 so it behaves like a controlled input**
 >
 > ## NOTE: Use [@uiw/react-codemirror](https://github.com/uiwjs/react-codemirror) instead. It's under active development and is a more robust solution.
+> 
+> This project was created soon after CodeMirror 6 was released and no other solutions existed afaik.
 
 ## Demo
 
